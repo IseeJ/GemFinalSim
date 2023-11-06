@@ -1,0 +1,40 @@
+#include <iostream>
+#include "TCanvas.h"
+#include "ViewFEMesh.hh"
+#include "ViewDrift.hh"
+
+void SimulateElectronShowers() {
+    TCanvas cGeom("geom", "Geometry");
+
+    // Your previous code to set up viewMesh remains unchanged
+    Garfield::ViewFEMesh viewMesh;
+    // Set up your mesh and viewMesh as before
+
+    int num_showers = 5; // Modify as needed
+
+    // Loop to generate multiple electron showers
+    for (int i = 0; i < num_showers; ++i) {
+        // Generate electron starting positions for each shower
+        // Replace this with your method to set initial electron positions
+        double initial_x = 0.0; // Example initial x position
+        double initial_y = 0.0; // Example initial y position
+        double initial_z = 0.0; // Example initial z position
+
+        // Set the starting point for the drift line
+        Garfield::ViewDrift viewDrift;
+        viewDrift.SetParticle("electron");
+        viewDrift.SetViewPoint(initial_x, initial_y, initial_z);
+        viewMesh.SetViewDrift(viewDrift);
+
+        // Plot the drift line for this electron shower
+        viewMesh.Plot();
+    }
+
+    // Display the canvas after plotting all showers
+    cGeom.Draw();
+}
+
+int main() {
+    SimulateElectronShowers();
+    return 0;
+}
