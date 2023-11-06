@@ -69,7 +69,8 @@ int main(int argc, char* argv[]) {
   Sensor* sensor = new Sensor();
   sensor->AddComponent(elm);
   
-  sensor->SetArea(-axis_x, -axis_y, -axis_z, axis_x, axis_y, axis_z);
+  //sensor->SetArea(-axis_x, -axis_y, -axis_z, axis_x, axis_y, axis_z);
+  sensor->SetArea(-5 * lem_pitch, -5 * lem_pitch, -0.01, 5 * lem_pitch,  5 * lem_pitch,  0.025);
   sensor->AddElectrode(elm, "wtlel");
   // Set the signal binning.
   const double tEnd = 500.0;
