@@ -34,16 +34,16 @@ int main(int argc, char* argv[]) {
 
   // Set relevant LEM parameters.
   // LEM thickness in cm
-  const double lem_th = 0.05;      
+  const double lem_th = 0.005;      
   // Copper thickness
   const double lem_cpth = 0.0035;  
   // LEM pitch in cm
   const double lem_pitch = 0.014;   
   // X-width of drift simulation will cover between +/- axis_x
-  const double axis_x = 0.1;  
+  const double axis_x = 0.01;  
   // Y-width of drift simulation will cover between +/- axis_y
-  const double axis_y = 0.1;  
-  const double axis_z = 0.25 + lem_th / 2 + lem_cpth;
+  const double axis_y = 0.01;  
+  const double axis_z = 0.025 + lem_th / 2 + lem_cpth;
 
 
   // Define the medium.
@@ -57,8 +57,8 @@ int main(int argc, char* argv[]) {
 
   // Import an Elmer-created field map.
   ComponentElmer* elm = new ComponentElmer(
-      "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/mesh.header", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/mesh.elements", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/mesh.nodes",
-      "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/dielectrics.dat", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/gemcell.result", "cm");
+      "gemcell/mesh.header", "gemcell/mesh.elements", "gemcell/mesh.nodes",
+      "gemcell/dielectrics.dat", "gemcell/gemcell.result", "cm");
   elm->EnablePeriodicityX();
   elm->EnableMirrorPeriodicityY();
   elm->SetGas(gas);
@@ -68,10 +68,8 @@ int main(int argc, char* argv[]) {
   // Set up a sensor object.
   Sensor* sensor = new Sensor();
   sensor->AddComponent(elm);
-  
-  // sensor->SetArea(-axis_x, -axis_y, -axis_z, axis_x, axis_y, axis_z);
-  sensor->SetArea(-5*lem_pitch, -5*lem_pitch, -0.01, 5*lem_pitch, 5*lem_pitch, 0.025);
-  sensor->AddElectrode(elm, "wtlel");
+  sensor->SetArea(-axis_x, -axis_y, -axis_z, axis_x, axis_y, axis_z);
+  // sensor->AddElectrode(elm, "wtlel");
   // Set the signal binning.
   const double tEnd = 500.0;
   const int nsBins = 500;
@@ -84,13 +82,12 @@ int main(int argc, char* argv[]) {
 
   // Set up the object for drift line visualization.
   ViewDrift* viewDrift = new ViewDrift();
-  // viewDrift->SetArea(-axis_x, -axis_y, -axis_z, axis_x, axis_y, axis_z);
-  viewDrift->SetArea(-2*lem_pitch,-0.02,2*lem_pitch,0.02);
+  viewDrift->SetArea(-axis_x, -axis_y, -axis_z, axis_x, axis_y, axis_z);
   aval->EnablePlotting(viewDrift);
 
   // Set the electron start parameters.
   // Starting z position for electron drift
-  const double zi = 0.5 * lem_th + lem_cpth + 0.1;  
+  const double zi = 0.5 * lem_th + lem_cpth + 0.01;  
   double ri = (lem_pitch / 2) * RndmUniform();
   double thetai = RndmUniform() * TwoPi;
   double xi = ri * cos(thetai);
@@ -144,8 +141,7 @@ int main(int argc, char* argv[]) {
     ViewField* vf = new ViewField();
     vf->SetSensor(sensor);
     vf->SetCanvas(cGeom);
-    //vf->SetArea(-axis_x, -axis_y, axis_x, axis_y);
-    vf->SetArea(-0.5*lem_pitch,-0.02,0.5*lem_pitch,0.02);
+    vf->SetArea(-axis_x, -axis_y, axis_x, axis_y);
     vf->SetNumberOfContours(40);
     vf->SetNumberOfSamples2d(30, 30);
     vf->SetPlane(0, -1, 0, 0, 0, 0);
@@ -154,8 +150,7 @@ int main(int argc, char* argv[]) {
 
   // Set up the object for FE mesh visualization.
   ViewFEMesh* vFE = new ViewFEMesh();
-  //vFE->SetArea(-axis_x, -axis_z, -axis_y, axis_x, axis_z, axis_y);
-  vFE-> SetArea(-2 *lem_pitch, -0.02, 2 * lem_pitch, 0.02);
+  vFE->SetArea(-axis_x, -axis_z, -axis_y, axis_x, axis_z, axis_y);
   vFE->SetCanvas(cGeom);
   vFE->SetComponent(elm);
   vFE->SetPlane(0, -1, 0, 0, 0, 0);

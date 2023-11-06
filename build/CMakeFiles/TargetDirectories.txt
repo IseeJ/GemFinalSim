@@ -1,0 +1,3 @@
+/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/build/CMakeFiles/avalanche.dir
+/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/build/CMakeFiles/edit_cache.dir
+/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/build/CMakeFiles/rebuild_cache.dir

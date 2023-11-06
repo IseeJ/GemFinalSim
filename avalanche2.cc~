@@ -68,10 +68,8 @@ int main(int argc, char* argv[]) {
   // Set up a sensor object.
   Sensor* sensor = new Sensor();
   sensor->AddComponent(elm);
-  
-  // sensor->SetArea(-axis_x, -axis_y, -axis_z, axis_x, axis_y, axis_z);
-  sensor->SetArea(-5*lem_pitch, -5*lem_pitch, -0.01, 5*lem_pitch, 5*lem_pitch, 0.025);
-  sensor->AddElectrode(elm, "wtlel");
+  sensor->SetArea(-axis_x, -axis_y, -axis_z, axis_x, axis_y, axis_z);
+  // sensor->AddElectrode(elm, "wtlel");
   // Set the signal binning.
   const double tEnd = 500.0;
   const int nsBins = 500;
@@ -84,8 +82,7 @@ int main(int argc, char* argv[]) {
 
   // Set up the object for drift line visualization.
   ViewDrift* viewDrift = new ViewDrift();
-  // viewDrift->SetArea(-axis_x, -axis_y, -axis_z, axis_x, axis_y, axis_z);
-  viewDrift->SetArea(-2*lem_pitch,-0.02,2*lem_pitch,0.02);
+  viewDrift->SetArea(-axis_x, -axis_y, -axis_z, axis_x, axis_y, axis_z);
   aval->EnablePlotting(viewDrift);
 
   // Set the electron start parameters.
@@ -144,8 +141,7 @@ int main(int argc, char* argv[]) {
     ViewField* vf = new ViewField();
     vf->SetSensor(sensor);
     vf->SetCanvas(cGeom);
-    //vf->SetArea(-axis_x, -axis_y, axis_x, axis_y);
-    vf->SetArea(-0.5*lem_pitch,-0.02,0.5*lem_pitch,0.02);
+    vf->SetArea(-axis_x, -axis_y, axis_x, axis_y);
     vf->SetNumberOfContours(40);
     vf->SetNumberOfSamples2d(30, 30);
     vf->SetPlane(0, -1, 0, 0, 0, 0);
