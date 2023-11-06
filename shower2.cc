@@ -60,7 +60,9 @@ int main(int argc, char* argv[]) {
     }
 
     // Visualize drift lines and other components
-    //...
+    TCanvas* c = new TCanvas("DriftLines", "Drift Lines", 800, 600);
+    viewDrift->SetCanvas(c);
+    viewDrift->Plot();
 
     app.Run(kTRUE);
 
