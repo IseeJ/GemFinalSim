@@ -130,7 +130,7 @@ int main(int argc, char* argv[]) {
   const double nTotal = 0;
   const double nBF = 0;
   const double nEvents = 10;
-  for (const i = 0; i < nEvents; ++i) { 
+  for (const double i = 0; i < nEvents; ++i) { 
     std::cout << i << "/" << nEvents << "\n";
     // Randomize the initial position. 
     const double x0 = -0.5 * pitch + RndmUniform() * pitch;
