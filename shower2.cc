@@ -1,72 +1,86 @@
 #include <iostream>
-#include <cmath>
 #include <TCanvas.h>
 #include <TApplication.h>
-#include <TFile.h>
-
 #include "Garfield/MediumMagboltz.hh"
 #include "Garfield/ComponentElmer.hh"
 #include "Garfield/Sensor.hh"
-#include "Garfield/ViewField.hh"
-#include "Garfield/Plotting.hh"
 #include "Garfield/ViewFEMesh.hh"
-#include "Garfield/ViewSignal.hh"
-#include "Garfield/GarfieldConstants.hh"
-#include "Garfield/Random.hh"
 #include "Garfield/AvalancheMicroscopic.hh"
+#include "Garfield/ViewDrift.hh"
+#include "Garfield/DriftLineRKF.hh"
+#include "Garfield/Random.hh"
 
 using namespace Garfield;
 
 int main(int argc, char* argv[]) {
     TApplication app("app", &argc, argv);
 
-    // Define the medium
+    // Set relevant LEM parameters.
+    // ...
+
+    // Define the medium.
     MediumMagboltz* gas = new MediumMagboltz();
-    gas->SetTemperature(293.15);  
-    gas->SetPressure(760.);       
-    gas->SetComposition("ar", 90., "ch4", 10.);
+    // ...
 
-    // Define the component (ComponentElmer)
-    ComponentElmer* elm = new ComponentElmer("/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/mesh.header", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/mesh.elements", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/mesh.nodes","/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/dielectrics.dat", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/gemcell.result", "cm");
+    // Import an Elmer-created field map.
+    ComponentElmer* elm = new ComponentElmer(/* Elmer file paths */);
+    // ...
 
-    // Additional component configurations...
-  
     const double pitch = 0.014;
+
     Sensor* sensor = new Sensor();
     sensor->AddComponent(elm);
-    sensor->SetArea(-5 * pitch, -5 * pitch, -0.01, 5 * pitch, 5 * pitch, 0.025);
+    sensor->SetArea(/* Set your desired sensor area */);
 
-    // Additional sensor configurations...
-
-    // Initialize avalanche properties
     AvalancheMicroscopic* aval = new AvalancheMicroscopic();
     aval->SetSensor(sensor);
     aval->SetCollisionSteps(100);
 
-    // Visualization setup
     ViewDrift* viewDrift = new ViewDrift();
-    viewDrift->SetArea(-2 * pitch, -0.02, 2 * pitch, 0.02);
+    viewDrift->SetArea( -2 * pitch, -0.02, 2 * pitch, 0.02);
     aval->EnablePlotting(viewDrift);
 
-    // Simulate multiple electron showers
-    const int numElectronShowers = 5; // Simulate 5 electron showers
+    ViewFEMesh* vFE = new ViewFEMesh();
+    const bool plotField = true;
 
-    for (int i = 0; i < numElectronShowers; ++i) {
-        double startX = -0.5 * pitch + RndmUniform() * pitch;
-        double startY = -0.5 * pitch + RndmUniform() * pitch;
-        const double startZ = 0.02;
-        const double t0 = 0.;
-        const double e0 = 0.1;
-        aval->AvalancheElectron(startX, startY, startZ, t0, e0, 0., 0., 0.);
+    if (plotField) {
+        // ... (code for plotting field contours)
+        // ...
+
+        // Electron avalanche and ion tracking section
+        // Count the total number of ions produced and the back-flowing ions
+        unsigned int nTotal = 0;
+        unsigned int nBF = 0;
+        constexpr unsigned int nEvents = 10;
+
+        for (unsigned int i = 0; i < nEvents; ++i) {
+            // Randomize the initial position
+            const double x0 = -0.5 * pitch + RndmUniform() * pitch;
+            const double y0 = -0.5 * pitch + RndmUniform() * pitch;
+            const double z0 = 0.02;
+            const double t0 = 0.;
+            const double e0 = 0.1;
+
+            aval->AvalancheElectron(x0, y0, z0, t0, e0, 0., 0., 0.);
+            
+            int ne = 0, ni = 0;
+            aval->GetAvalancheSize(ne, ni);
+            
+            for (const auto& electron : aval->GetElectrons()) {
+                const auto& p0 = electron.path[0];
+                // Track ions using drift object
+                // drift.DriftIon(p0.x, p0.y, p0.z, p0.t);
+                ++nTotal;
+                const auto& endpoint = drift.GetIons().front().path.back();
+                if (endpoint.z > 0.005) ++nBF;
+            }
+        }
+
+        std::cout << "Fraction of back-flowing ions: " 
+                << double(nBF) / double(nTotal) << "\n";
     }
 
-    // Visualize drift lines and other components
-    TCanvas* c = new TCanvas("DriftLines", "Drift Lines", 800, 600);
-    viewDrift->SetCanvas(c);
-    viewDrift->Plot();
-
     app.Run(kTRUE);
-
     return 0;
 }
 
