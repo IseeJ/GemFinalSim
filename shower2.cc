@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cmath>
-
 #include <TCanvas.h>
 #include <TApplication.h>
 #include <TFile.h>
@@ -9,68 +8,68 @@
 #include "Garfield/ComponentElmer.hh"
 #include "Garfield/Sensor.hh"
 #include "Garfield/ViewField.hh"
-#include "Garfield/ViewFEMesh.hh"
-#include "Garfield/ViewDrift.hh"
 #include "Garfield/Plotting.hh"
+#include "Garfield/ViewFEMesh.hh"
+#include "Garfield/ViewSignal.hh"
 #include "Garfield/GarfieldConstants.hh"
 #include "Garfield/Random.hh"
 #include "Garfield/AvalancheMicroscopic.hh"
 
 using namespace Garfield;
 
-void SimulateElectronShowers(ViewDrift* viewDrift, ComponentElmer* elm, int num_showers) {
-    // Loop to generate multiple electron showers
-    for (int i = 0; i < num_showers; ++i) {
-        // Generate electron starting positions for each shower
-        // Replace this with your method to set initial electron positions
-        double initial_x = 0.0; // Example initial x position
-        double initial_y = 0.0; // Example initial y position
-        double initial_z = 0.0; // Example initial z position
-
-        // Set the starting point for the drift line
-        viewDrift->SetParticle("electron");
-        viewDrift->SetViewPoint(initial_x, initial_y, initial_z);
-
-        // Plot the drift line for this electron shower
-        viewDrift->Plot();
-    }
-}
-
 int main(int argc, char* argv[]) {
     TApplication app("app", &argc, argv);
 
-    // Set up the medium
+    // Define the medium
     MediumMagboltz* gas = new MediumMagboltz();
     gas->SetTemperature(293.15);  
     gas->SetPressure(760.);       
     gas->SetComposition("ar", 90., "ch4", 10.);
 
-    // Set up the component and sensor
-    ComponentElmer* elm = new ComponentElmer("/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/mesh.header", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/mesh.elements", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/mesh.nodes", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/dielectrics.dat", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/gemcell.result", "cm");
+    // Define the component (ComponentElmer)
+    ComponentElmer* elm = new ComponentElmer(
+        /* Path to mesh.header */, 
+        /* Path to mesh.elements */, 
+        /* Path to mesh.nodes */,
+        /* Path to dielectrics.dat */, 
+        /* Path to gemcell.result */, 
+        "cm"
+    );
+    // Additional component configurations...
   
-    elm->SetGas(gas);
-
+    const double pitch = 0.014;
     Sensor* sensor = new Sensor();
     sensor->AddComponent(elm);
-    sensor->SetArea(-0.07, -0.07, -0.01, 0.07, 0.07, 0.25);
+    sensor->SetArea(-5 * pitch, -5 * pitch, -0.01, 5 * pitch, 5 * pitch, 0.025);
 
-    // Set up the drift line visualization
-    ViewDrift* viewDrift = new ViewDrift();
-    viewDrift->SetArea(-0.07, -0.07, 0.07, 0.07);
+    // Additional sensor configurations...
 
-    // Create the avalanche object and link it to the sensor
+    // Initialize avalanche properties
     AvalancheMicroscopic* aval = new AvalancheMicroscopic();
     aval->SetSensor(sensor);
     aval->SetCollisionSteps(100);
+
+    // Visualization setup
+    ViewDrift* viewDrift = new ViewDrift();
+    viewDrift->SetArea(-2 * pitch, -0.02, 2 * pitch, 0.02);
     aval->EnablePlotting(viewDrift);
 
-    // Set up field visualization, plot potential contour, and geometry
-    TCanvas* cGeom = new TCanvas("geom", "Geometry/Avalanche/Fields");
-    // ... (Add your field visualization code)
+    // Simulate multiple electron showers
+    const int numElectronShowers = 5; // Simulate 5 electron showers
 
-    // Generate and visualize electron showers
-    SimulateElectronShowers(viewDrift, elm, 5); // Simulate 5 electron showers
+    for (int i = 0; i < numElectronShowers; ++i) {
+        double startX = /* Set the initial X-coordinate */;
+        double startY = /* Set the initial Y-coordinate */;
+        double startZ = /* Set the initial Z-coordinate */;
+
+        aval->AvalancheElectron(startX, startY, startZ, 0., 0., 0.);
+    }
+
+    // Visualize drift lines and other components
+    //...
 
     app.Run(kTRUE);
+
     return 0;
 }
+
