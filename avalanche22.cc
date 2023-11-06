@@ -115,6 +115,7 @@ int main(int argc, char* argv[]) {
     vFE->SetColor(1, kGray);
     vFE->SetColor(2, kYellow + 3);
     vFE->SetColor(3, kYellow + 3);
+    vFE->SetColor(4, kYellow + 3);
     vFE->EnableAxes();
     vFE->SetXaxisTitle("x (cm)");
     vFE->SetYaxisTitle("z (cm)");
