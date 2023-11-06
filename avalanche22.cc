@@ -75,10 +75,10 @@ int main(int argc, char* argv[]) {
 
   //sensor->SetArea(-axis_x, -axis_y, -axis_z, axis_x, axis_y, axis_z);
   sensor->SetArea(-5 * pitch, -5 * pitch, -0.01, 5 * pitch,  5 * pitch,  0.025);
-  sensor->AddElectrode(elm, "wtlel");
+  //sensor->AddElectrode(elm, "wtlel");
   // Set the signal binning.
-  const double tEnd = 500.0;
-  const int nsBins = 500;
+  //const double tEnd = 500.0;
+  //const int nsBins = 500;
   // sensor->SetTimeWindow(0., tEnd / nsBins, nsBins);
 
   // Create an avalanche object
@@ -121,6 +121,7 @@ int main(int argc, char* argv[]) {
     vFE->SetViewDrift(viewDrift);
     vFE->Plot();
   }
+  // above plot just gem geometry
   app.Run(kTRUE);
   return 0;
 }
