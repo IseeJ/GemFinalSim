@@ -127,9 +127,9 @@ int main(int argc, char* argv[]) {
   // above plot 2 windows: gem geom and potential contour
 
   // Count the total number of ions produced the back-flowing ions.
-  const nTotal = 0;
-  const nBF = 0;
-  const nEvents = 10;
+  const double nTotal = 0;
+  const double nBF = 0;
+  const double nEvents = 10;
   for (const i = 0; i < nEvents; ++i) { 
     std::cout << i << "/" << nEvents << "\n";
     // Randomize the initial position. 
