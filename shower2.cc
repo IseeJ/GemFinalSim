@@ -43,12 +43,20 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < numElectronShowers; ++i) {
         //double startX = -0.5 * pitch + RndmUniform() * pitch;
         //double startY = -0.5 * pitch + RndmUniform() * pitch;
-        double startX = -5 * pitch + RndmUniform() * pitch;
-        double startY = -5 * pitch + RndmUniform() * pitch;
-        const double startZ = 0.02;
+        //double startX = -5 * pitch + RndmUniform() * pitch;
+        //double startY = -5 * pitch + RndmUniform() * pitch;
+        //const double startZ = 0.02;
+        //const double t0 = 0.;
+        //const double e0 = 0.1;
+        //aval->AvalancheElectron(startX, startY, startZ, t0, e0, 0., 0., 0.);
+
+        const double x0 = -0.1 + RndmUniform() * 0.2;  // Example range between -0.1 and 0.1
+        const double y0 = -0.1 + RndmUniform() * 0.2;  // Example range between -0.1 and 0.1
+        const double z0 = 0.01 + RndmUniform() * 0.02; // Example range between 0.01 and 0.03
         const double t0 = 0.;
         const double e0 = 0.1;
-        aval->AvalancheElectron(startX, startY, startZ, t0, e0, 0., 0., 0.);
+        aval->AvalancheElectron(x0, y0, z0, t0, e0, 0., 0., 0.);
+
     }
 
     // Visualize drift lines and other components
