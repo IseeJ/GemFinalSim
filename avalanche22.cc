@@ -107,7 +107,7 @@ int main(int argc, char* argv[]) {
     vf->SetPlane(0, -1, 0, 0, 0, 0);
     vf->PlotContour("v");
     
-    TCanvas* cd = new TCanvas("geom", "Geometry/Avalanche/Fields");
+    TCanvas* cd = new TCanvas("drift", "Geometry/Avalanche/Fields");
     vFE->SetArea(-2 *pitch, -0.02, 2 * pitch, 0.02);
     vFE->SetCanvas(cd);
     vFE->SetComponent(elm);
