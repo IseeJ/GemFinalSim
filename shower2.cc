@@ -47,8 +47,8 @@ int main(int argc, char* argv[]) {
 
     // Set up the component and sensor
     ComponentElmer* elm = new ComponentElmer(
-        "mesh.header", "mesh.elements", "mesh.nodes",
-        "dielectrics.dat", "gemcell.result", "cm");
+    "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/mesh.header", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/mesh.elements", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/mesh.nodes", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/dielectrics.dat", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/gemcell.result", "cm");
+  
     elm->SetGas(gas);
 
     Sensor* sensor = new Sensor();
