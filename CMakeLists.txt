@@ -5,7 +5,7 @@ if(NOT TARGET Garfield::Garfield)
 endif()
 
 # ---Build executable------------------------------------------------------------
-add_executable(avalanche avalanche2.cc)
+add_executable(avalanche shower2.cc)
 target_link_libraries(avalanche Garfield::Garfield)
 
 # ---Copy all files locally to the build directory-------------------------------
