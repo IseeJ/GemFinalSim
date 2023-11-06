@@ -50,9 +50,9 @@ int main(int argc, char* argv[]) {
         //const double e0 = 0.1;
         //aval->AvalancheElectron(startX, startY, startZ, t0, e0, 0., 0., 0.);
         // Adjust the starting point to fit within the active area of the sensor
-        const double x0 = -4 * pitch + RndmUniform() * 8 * pitch; // Example range (-4 * pitch, 4 * pitch)
-        const double y0 = -4 * pitch + RndmUniform() * 8 * pitch; // Example range (-4 * pitch, 4 * pitch)
-        const double z0 = 0.01 + RndmUniform() * 0.015;          // Example range (0.01, 0.025)
+        const double x0 = -0.005 * pitch + RndmUniform() * pitch; // Example range (-4 * pitch, 4 * pitch)
+        const double y0 = -0.005 * pitch + RndmUniform() * pitch; // Example range (-4 * pitch, 4 * pitch)
+        const double z0 = 0.02       // Example range (0.01, 0.025)
         const double t0 = 0.;
         const double e0 = 0.1;
 
