@@ -50,9 +50,9 @@ int main(int argc, char* argv[]) {
         //const double e0 = 0.1;
         //aval->AvalancheElectron(startX, startY, startZ, t0, e0, 0., 0., 0.);
 
-        const double x0 = -0.05 + RndmUniform() * 0.1;  // Example range between -0.05 and 0.05
-        const double y0 = -0.05 + RndmUniform() * 0.1;  // Example range between -0.05 and 0.05
-        const double z0 = 0.02 + RndmUniform() * 0.01; // Example range between 0.02 and 0.03
+        const double x0 = -0.03 + RndmUniform() * 0.06;  // Example range between -0.03 and 0.03
+        const double y0 = -0.03 + RndmUniform() * 0.06;  // Example range between -0.03 and 0.03
+        const double z0 = 0.01 + RndmUniform() * 0.02;   // Example range between 0.01 and 0.03
         const double t0 = 0.;
         const double e0 = 0.1;
 
