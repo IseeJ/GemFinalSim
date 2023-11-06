@@ -54,9 +54,10 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < numElectronShowers; ++i) {
         double startX = -0.5 * pitch + RndmUniform() * pitch;
         double startY = -0.5 * pitch + RndmUniform() * pitch;
-        double startZ = 0.02;
-
-        aval->AvalancheElectron(startX, startY, startZ, 0., 0., 0.);
+        const double startZ = 0.02;
+        const double t0 = 0.;
+        const double e0 = 0.1;
+        aval->AvalancheElectron(startX, startY, startZ, t0, e0, 0., 0., 0.);
     }
 
     // Visualize drift lines and other components
