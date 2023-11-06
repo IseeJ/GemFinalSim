@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
   sensor->AddComponent(elm);
 
   //sensor->SetArea(-axis_x, -axis_y, -axis_z, axis_x, axis_y, axis_z);
-  sensor->SetArea(-5 * lem_pitch, -5 * lem_pitch, -0.01, 5 * lem_pitch,  5 * lem_pitch,  0.025);
+  sensor->SetArea(-5 * pitch, -5 * pitch, -0.01, 5 * pitch,  5 * pitch,  0.025);
   sensor->AddElectrode(elm, "wtlel");
   // Set the signal binning.
   const double tEnd = 500.0;
@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
   // Set up the object for drift line visualization.
   ViewDrift* viewDrift = new ViewDrift();
   // viewDrift->SetArea(-axis_x, -axis_y, -axis_z, axis_x, axis_y, axis_z);
-  viewDrift->SetArea( -2 * lem_pitch, -0.02, 2 * lem_pitch, 0.02)
+  viewDrift->SetArea( -2 * pitch, -0.02, 2 * pitch, 0.02)
   aval->EnablePlotting(viewDrift);
 
   const double pitch = 0.014;
@@ -97,6 +97,8 @@ int main(int argc, char* argv[]) {
   ViewFEMesh* vFE = new ViewFEMesh();
   const bool plotField = true;
   if (plotField) {
+    TCanvas* cGeom = new TCanvas("geom", "Geometry/Avalanche/Fields");
+    cGeom->SetLeftMargin(0.14);
     vf->SetSensor(sensor);
     vf->SetCanvas(cGeom);
     vf->SetArea(-0.5 * pitch, -0.02, 0.5 * pitch, 0.02);
@@ -106,7 +108,7 @@ int main(int argc, char* argv[]) {
     vf->SetPlane(0, -1, 0, 0, 0, 0);
     vf->PlotContour("v");
     
-    vFE->SetArea(-2 *lem_pitch, -0.02, 2 * lem_pitch, 0.02);
+    vFE->SetArea(-2 *pitch, -0.02, 2 * pitch, 0.02);
     vFE->SetCanvas(cGeom);
     vFE->SetComponent(elm);
     vFE->SetPlane(0, -1, 0, 0, 0, 0);
