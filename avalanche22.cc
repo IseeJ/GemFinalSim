@@ -83,7 +83,8 @@ int main(int argc, char* argv[]) {
 
   // Set up the object for drift line visualization.
   ViewDrift* viewDrift = new ViewDrift();
-  viewDrift->SetArea(-axis_x, -axis_y, -axis_z, axis_x, axis_y, axis_z);
+  // viewDrift->SetArea(-axis_x, -axis_y, -axis_z, axis_x, axis_y, axis_z);
+  viewDrift->SetArea( -2 * lem_pitch, -0.02, 2 * lem_pitch, 0.02)
   aval->EnablePlotting(viewDrift);
 
   // Set the electron start parameters.
