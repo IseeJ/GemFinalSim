@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) {
 
 
   
-
+  const double pitch = 0.014;
   // old
   // Set up a sensor object.
   Sensor* sensor = new Sensor();
@@ -91,8 +91,7 @@ int main(int argc, char* argv[]) {
   // viewDrift->SetArea(-axis_x, -axis_y, -axis_z, axis_x, axis_y, axis_z);
   viewDrift->SetArea( -2 * pitch, -0.02, 2 * pitch, 0.02)
   aval->EnablePlotting(viewDrift);
-
-  const double pitch = 0.014;
+  
   ViewField* vf = new ViewField();
   ViewFEMesh* vFE = new ViewFEMesh();
   const bool plotField = true;
