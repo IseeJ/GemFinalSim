@@ -34,16 +34,16 @@ int main(int argc, char* argv[]) {
 
   // Set relevant LEM parameters.
   // LEM thickness in cm
-  const double lem_th = 0.05;      
+  //const double lem_th = 0.05;      
   // Copper thickness
-  const double lem_cpth = 0.0035;  
+  //const double lem_cpth = 0.0035;  
   // LEM pitch in cm
-  const double lem_pitch = 0.014;   
+  //const double lem_pitch = 0.014;   
   // X-width of drift simulation will cover between +/- axis_x
-  const double axis_x = 0.1;  
+  //const double axis_x = 0.1;  
   // Y-width of drift simulation will cover between +/- axis_y
-  const double axis_y = 0.1;  
-  const double axis_z = 0.25 + lem_th / 2 + lem_cpth;
+  //const double axis_y = 0.1;  
+  //const double axis_z = 0.25 + lem_th / 2 + lem_cpth;
 
 
   // Define the medium.
@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
   // Set the temperature (K)
   gas->SetTemperature(293.15);  
   // Set the pressure (Torr)
-  gas->SetPressure(740.);       
+  gas->SetPressure(760.);       
   // Specify the gas mixture (Ar/CO2 70:30)
   gas->SetComposition("ar", 90., "ch4", 10.);  
 
@@ -65,10 +65,14 @@ int main(int argc, char* argv[]) {
   // Import the weighting field for the readout electrode.
   // elm->SetWeightingField("gemcell/gemcell_WTlel.result", "wtlel");
 
+
+  
+
+  // old
   // Set up a sensor object.
   Sensor* sensor = new Sensor();
   sensor->AddComponent(elm);
-  
+
   //sensor->SetArea(-axis_x, -axis_y, -axis_z, axis_x, axis_y, axis_z);
   sensor->SetArea(-5 * lem_pitch, -5 * lem_pitch, -0.01, 5 * lem_pitch,  5 * lem_pitch,  0.025);
   sensor->AddElectrode(elm, "wtlel");
@@ -88,89 +92,34 @@ int main(int argc, char* argv[]) {
   viewDrift->SetArea( -2 * lem_pitch, -0.02, 2 * lem_pitch, 0.02)
   aval->EnablePlotting(viewDrift);
 
-  // Set the electron start parameters.
-  // Starting z position for electron drift
-  const double zi = 0.5 * lem_th + lem_cpth + 0.1;  
-  double ri = (lem_pitch / 2) * RndmUniform();
-  double thetai = RndmUniform() * TwoPi;
-  double xi = ri * cos(thetai);
-  double yi = ri * sin(thetai);
-  // Calculate the avalanche.
-  aval->AvalancheElectron(xi, yi, zi, 0., 0., 0., 0., 0.);
-  std::cout << "... avalanche complete with "
-            << aval->GetNumberOfElectronEndpoints() << " electron tracks.\n";
-
-  // Extract the calculated signal.
-  double bscale = tEnd / nsBins;  // time per bin
-  double sum = 0.;  // to keep a running sum of the integrated signal
-
-  // Create ROOT histograms of the signal and a file in which to store them.
-  TFile* f = new TFile("avalanche_signals.root", "RECREATE");
-  TH1F* hS = new TH1F("hh", "hh", nsBins, 0, tEnd);        // total signal
-  TH1F* hInt = new TH1F("hInt", "hInt", nsBins, 0, tEnd);  // integrated signal
-
-  // Fill the histograms with the signals.
-  //  Note that the signals will be in C/(ns*binWidth), and we will divide by e
-  // to give a signal in e/(ns*binWidth).
-  //  The total signal is then the integral over all bins multiplied by the bin
-  // width in ns.
-  for (int i = 0; i < nsBins; i++) {
-    double wt = sensor->GetSignal("wtlel", i) / ElementaryCharge;
-    sum += wt;
-    hS->Fill(i * bscale, wt);
-    hInt->Fill(i * bscale, sum);
-  }
-
-  // Write the histograms to the TFile.
-  hS->Write();
-  hInt->Write();
-  f->Close();
-
-  // Plot the signal.
-  const bool plotSignal = false;
-  if (plotSignal) {
-    TCanvas* cSignal = new TCanvas("signal", "Signal");
-    ViewSignal* vSignal = new ViewSignal();
-    vSignal->SetSensor(sensor);
-    vSignal->SetCanvas(cSignal);
-    vSignal->PlotSignal("wtlel");
-  }
-
-  // Plot the geometry, field and drift lines.
-  TCanvas* cGeom = new TCanvas("geom", "Geometry/Avalanche/Fields");
-  cGeom->SetLeftMargin(0.14);
-  const bool plotContours = true;
-  if (plotContours) {
-    ViewField* vf = new ViewField();
+  const double pitch = 0.014;
+  ViewField* vf = new ViewField();
+  ViewFEMesh* vFE = new ViewFEMesh();
+  const bool plotField = true;
+  if (plotField) {
     vf->SetSensor(sensor);
     vf->SetCanvas(cGeom);
-    vf->SetArea(-axis_x, -axis_y, axis_x, axis_y);
+    vf->SetArea(-0.5 * pitch, -0.02, 0.5 * pitch, 0.02);
+    //vf->SetVoltageRange(-160.,160.);
     vf->SetNumberOfContours(40);
     vf->SetNumberOfSamples2d(30, 30);
     vf->SetPlane(0, -1, 0, 0, 0, 0);
     vf->PlotContour("v");
-  }
-
-  // Set up the object for FE mesh visualization.
-  ViewFEMesh* vFE = new ViewFEMesh();
-  //vFE->SetArea(-axis_x, -axis_z, -axis_y, axis_x, axis_z, axis_y);
-  vFE->SetArea(-2 *lem_pitch, -0.02, 2 * lem_pitch, 0.02);
-  vFE->SetCanvas(cGeom);
-  vFE->SetComponent(elm);
-  vFE->SetPlane(0, -1, 0, 0, 0, 0);
-  vFE->SetFillMesh(true);
-  vFE->SetColor(1, kGray);
-  vFE->SetColor(2, kYellow + 3);
-  vFE->SetColor(3, kYellow + 3);
-  if (!plotContours) {
+    
+    vFE->SetArea(-2 *lem_pitch, -0.02, 2 * lem_pitch, 0.02);
+    vFE->SetCanvas(cGeom);
+    vFE->SetComponent(elm);
+    vFE->SetPlane(0, -1, 0, 0, 0, 0);
+    vFE->SetFillMesh(true);
+    vFE->SetColor(1, kGray);
+    vFE->SetColor(2, kYellow + 3);
+    vFE->SetColor(3, kYellow + 3);
     vFE->EnableAxes();
     vFE->SetXaxisTitle("x (cm)");
     vFE->SetYaxisTitle("z (cm)");
     vFE->SetViewDrift(viewDrift);
     vFE->Plot();
   }
-
   app.Run(kTRUE);
-
   return 0;
 }
