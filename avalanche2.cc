@@ -70,7 +70,7 @@ int main(int argc, char* argv[]) {
   sensor->AddComponent(elm);
   
   // sensor->SetArea(-axis_x, -axis_y, -axis_z, axis_x, axis_y, axis_z);
-  sensor->SetArea(-5 * pitch, -5 * lem_pitch, -0.01, 5 * lem_pitch,  5 * lem_pitch,  0.025);
+  sensor->SetArea(-5 * lem_pitch, -5 * lem_pitch, -0.01, 5 * lem_pitch,  5 * lem_pitch,  0.025);
   sensor->AddElectrode(elm, "wtlel");
   // Set the signal binning.
   const double tEnd = 500.0;
@@ -155,8 +155,8 @@ int main(int argc, char* argv[]) {
   // Set up the object for FE mesh visualization.
   ViewFEMesh* vFE = new ViewFEMesh();
   //vFE->SetArea(-axis_x, -axis_z, -axis_y, axis_x, axis_z, axis_y);
-  //vFE->SetArea(-2 *lem_pitch, -0.02, 2 * lem_pitch, 0.02);
-  vFE->SetArea(-0.5 * pitch, -0.02, 0.5 * pitch, 0.02);
+  vFE->SetArea(-2 *lem_pitch, -0.02, 2 * lem_pitch, 0.02);
+  // vFE->SetArea(-0.5 * pitch, -0.02, 0.5 * pitch, 0.02);
   vFE->SetCanvas(cGeom);
   vFE->SetComponent(elm);
   vFE->SetPlane(0, -1, 0, 0, 0, 0);
