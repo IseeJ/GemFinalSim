@@ -6,6 +6,7 @@
 #include <Garfield/Sensor.hh>
 #include <Garfield/AvalancheMicroscopic.hh>
 #include <Garfield/ViewDrift.hh>
+#include <Garfield/ViewFEMesh.hh>
 
 int main(int argc, char* argv[]) {
   TApplication app("app", &argc, argv);
