@@ -29,18 +29,6 @@ int main(int argc, char* argv[]) {
   sensor->AddComponent(elm);
   sensor->SetArea(-0.1, -0.1, 0.0, 0.1, 0.1, 0.2);
   
-    // Set up view for GEM geometry
-  Garfield::ViewFEMesh* viewMesh = new Garfield::ViewFEMesh();
-  TCanvas* cMesh = new TCanvas("cMesh", "GEM Geometry", 800, 800);
-  viewMesh->SetCanvas(cMesh);
-  viewMesh->SetComponent(elm);
-  viewMesh->SetPlane(0, -1, 0, 0, 0, 0); // Adjust plane as needed
-  viewMesh->SetFillMesh(true);
-  viewMesh->SetColor(1, kGray);
-  viewMesh->SetColor(2, kYellow + 3);
-  viewMesh->EnableAxes();
-  viewMesh->Plot();
-
   // Create an avalanche object
   Garfield::AvalancheMicroscopic* aval = new Garfield::AvalancheMicroscopic();
   aval->SetSensor(sensor);
