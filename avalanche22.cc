@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
   // Set up the object for drift line visualization.
   ViewDrift* viewDrift = new ViewDrift();
   // viewDrift->SetArea(-axis_x, -axis_y, -axis_z, axis_x, axis_y, axis_z);
-  viewDrift->SetArea( -2 * pitch, -0.02, 2 * pitch, 0.02)
+  viewDrift->SetArea( -2 * pitch, -0.02, 2 * pitch, 0.02);
   aval->EnablePlotting(viewDrift);
   
   ViewField* vf = new ViewField();
