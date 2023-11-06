@@ -92,6 +92,7 @@ int main(int argc, char* argv[]) {
   viewDrift->SetArea( -2 * pitch, -0.02, 2 * pitch, 0.02);
   aval->EnablePlotting(viewDrift);
   
+  
   ViewField* vf = new ViewField();
   ViewFEMesh* vFE = new ViewFEMesh();
   const bool plotField = true;
@@ -100,7 +101,7 @@ int main(int argc, char* argv[]) {
     cGeom->SetLeftMargin(0.14);
     vf->SetSensor(sensor);
     vf->SetCanvas(cGeom);
-    vf->SetArea(-0.5 * pitch, -0.02, 0.5 * pitch, 0.02);
+    vf->SetArea(-2 *pitch, -0.02, 2 * pitch, 0.02);
     //vf->SetVoltageRange(-160.,160.);
     vf->SetNumberOfContours(40);
     vf->SetNumberOfSamples2d(30, 30);
@@ -121,9 +122,33 @@ int main(int argc, char* argv[]) {
     vFE->SetXaxisTitle("x (cm)");
     vFE->SetYaxisTitle("z (cm)");
     vFE->SetViewDrift(viewDrift);
-    vFE->Plot();
+    vFE->Plot();  
   }
-  // above plot just gem geometry
+  // above plot 2 windows: gem geom and potential contour
+
+  // Count the total number of ions produced the back-flowing ions.
+  const nTotal = 0;
+  const nBF = 0;
+  const nEvents = 10;
+  for (const i = 0; i < nEvents; ++i) { 
+    std::cout << i << "/" << nEvents << "\n";
+    // Randomize the initial position. 
+    const double x0 = -0.5 * pitch + RndmUniform() * pitch;
+    const double y0 = -0.5 * pitch + RndmUniform() * pitch;
+    const double z0 = 0.02; 
+    const double t0 = 0.;
+    const double e0 = 0.1;
+    aval->AvalancheElectron(x0, y0, z0, t0, e0, 0., 0., 0.);
+    int ne = 0, ni = 0;
+    aval.GetAvalancheSize(ne, ni);
+    for (const auto& electron : aval->GetElectrons()) {
+      const auto& p0 = electron.path[0];
+      drift->DriftIon(p0.x, p0.y, p0.z, p0.t);
+      ++nTotal;
+      const auto& endpoint = drift->GetIons().front().path.back();
+      if (endpoint.z > 0.005) ++nBF;
+    }
+  }
   app.Run(kTRUE);
   return 0;
 }
