@@ -27,14 +27,8 @@ int main(int argc, char* argv[]) {
     gas->SetComposition("ar", 90., "ch4", 10.);
 
     // Define the component (ComponentElmer)
-    ComponentElmer* elm = new ComponentElmer(
-        /* Path to mesh.header */, 
-        /* Path to mesh.elements */, 
-        /* Path to mesh.nodes */,
-        /* Path to dielectrics.dat */, 
-        /* Path to gemcell.result */, 
-        "cm"
-    );
+    ComponentElmer* elm = new ComponentElmer("/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/mesh.header", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/mesh.elements", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/mesh.nodes","/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/dielectrics.dat", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/gemcell.result", "cm");
+
     // Additional component configurations...
   
     const double pitch = 0.014;
@@ -58,9 +52,9 @@ int main(int argc, char* argv[]) {
     const int numElectronShowers = 5; // Simulate 5 electron showers
 
     for (int i = 0; i < numElectronShowers; ++i) {
-        double startX = /* Set the initial X-coordinate */;
-        double startY = /* Set the initial Y-coordinate */;
-        double startZ = /* Set the initial Z-coordinate */;
+        double startX = -0.5 * pitch + RndmUniform() * pitch;
+        double startY = -0.5 * pitch + RndmUniform() * pitch;
+        double startZ = 0.02;
 
         aval->AvalancheElectron(startX, startY, startZ, 0., 0., 0.);
     }
