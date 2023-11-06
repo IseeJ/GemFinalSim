@@ -41,8 +41,10 @@ int main(int argc, char* argv[]) {
     // Simulate multiple electron showers
     const int numElectronShowers = 5; // Simulate 5 electron showers
     for (int i = 0; i < numElectronShowers; ++i) {
-        double startX = -0.5 * pitch + RndmUniform() * pitch;
-        double startY = -0.5 * pitch + RndmUniform() * pitch;
+        //double startX = -0.5 * pitch + RndmUniform() * pitch;
+        //double startY = -0.5 * pitch + RndmUniform() * pitch;
+        double startX = -5 * pitch + RndmUniform() * pitch;
+        double startY = -5 * pitch + RndmUniform() * pitch;
         const double startZ = 0.02;
         const double t0 = 0.;
         const double e0 = 0.1;
