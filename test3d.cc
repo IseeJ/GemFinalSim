@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
   gas->SetComposition("ar", 90., "ch4", 10.);
 
   // Import an Elmer field map
-  Garfield::ComponentElmer* elm = new Garfield::ComponentElmer("path/to/mesh.header", "path/to/mesh.elements", "path/to/mesh.nodes", "path/to/dielectrics.dat", "path/to/gemcell.result", "cm");
+  Garfield::ComponentElmer* elm = new Garfield::ComponentElmer("/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/mesh.header", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/mesh.elements", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/mesh.nodes","/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/dielectrics.dat", "/home/wjaidee/Programs/garfieldpp/Examples/Elmer/newgem/gemcell/gemcell.result", "cm");
   elm->EnablePeriodicityX();
   elm->EnableMirrorPeriodicityY();
   elm->SetGas(gas);
