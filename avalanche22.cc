@@ -126,29 +126,6 @@ int main(int argc, char* argv[]) {
   }
   // above plot 2 windows: gem geom and potential contour
 
-  // Count the total number of ions produced the back-flowing ions.
-  const double nTotal = 0;
-  const double nBF = 0;
-  const double nEvents = 10;
-  for (const double i = 0; i < nEvents; ++i) { 
-    std::cout << i << "/" << nEvents << "\n";
-    // Randomize the initial position. 
-    const double x0 = -0.5 * pitch + RndmUniform() * pitch;
-    const double y0 = -0.5 * pitch + RndmUniform() * pitch;
-    const double z0 = 0.02; 
-    const double t0 = 0.;
-    const double e0 = 0.1;
-    aval->AvalancheElectron(x0, y0, z0, t0, e0, 0., 0., 0.);
-    int ne = 0, ni = 0;
-    aval.GetAvalancheSize(ne, ni);
-    for (const auto& electron : aval->GetElectrons()) {
-      const auto& p0 = electron.path[0];
-      drift->DriftIon(p0.x, p0.y, p0.z, p0.t);
-      ++nTotal;
-      const auto& endpoint = drift->GetIons().front().path.back();
-      if (endpoint.z > 0.005) ++nBF;
-    }
-  }
   app.Run(kTRUE);
   return 0;
 }
