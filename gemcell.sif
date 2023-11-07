@@ -1,3 +1,4 @@
+
 Check Keywords Warn
 
 ! Set drift distance, E fields, and voltage between GEMs
@@ -9,7 +10,7 @@ $ldist = 0.2
 $udist = 0.5
 $Edrift = 50
 $Etrans = 1000
-$deltaV = 600
+$deltaV = 850
 
 $WTuel = 0
 $WTucp = 0
@@ -71,10 +72,10 @@ Solver 1
   Linear System Convergence Tolerance = 1.0e-10
   Linear System Preconditioning = ILU1
   Steady State Convergence Tolerance = 5.0e-7
-  Adaptive Mesh Refinement = True
-  Adaptive Remesh = True
-  Adaptive Save Mesh = True
-  Adaptive Error Limit = 1.0e-12
+!  Adaptive Mesh Refinement = True
+!  Adaptive Remesh = True
+!  Adaptive Save Mesh = True
+!  Adaptive Error Limit = 1.0e-12
 End
 
 ! Gas

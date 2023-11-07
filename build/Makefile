@@ -129,29 +129,29 @@ avalanche/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/avalanche.dir/build.make CMakeFiles/avalanche.dir/build
 .PHONY : avalanche/fast
 
-shower2.o: shower2.cc.o
-.PHONY : shower2.o
+avalanche2.o: avalanche2.cc.o
+.PHONY : avalanche2.o
 
 # target to build an object file
-shower2.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/avalanche.dir/build.make CMakeFiles/avalanche.dir/shower2.cc.o
-.PHONY : shower2.cc.o
+avalanche2.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/avalanche.dir/build.make CMakeFiles/avalanche.dir/avalanche2.cc.o
+.PHONY : avalanche2.cc.o
 
-shower2.i: shower2.cc.i
-.PHONY : shower2.i
+avalanche2.i: avalanche2.cc.i
+.PHONY : avalanche2.i
 
 # target to preprocess a source file
-shower2.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/avalanche.dir/build.make CMakeFiles/avalanche.dir/shower2.cc.i
-.PHONY : shower2.cc.i
+avalanche2.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/avalanche.dir/build.make CMakeFiles/avalanche.dir/avalanche2.cc.i
+.PHONY : avalanche2.cc.i
 
-shower2.s: shower2.cc.s
-.PHONY : shower2.s
+avalanche2.s: avalanche2.cc.s
+.PHONY : avalanche2.s
 
 # target to generate assembly for a file
-shower2.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/avalanche.dir/build.make CMakeFiles/avalanche.dir/shower2.cc.s
-.PHONY : shower2.cc.s
+avalanche2.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/avalanche.dir/build.make CMakeFiles/avalanche.dir/avalanche2.cc.s
+.PHONY : avalanche2.cc.s
 
 # Help Target
 help:
@@ -162,9 +162,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... avalanche"
-	@echo "... shower2.o"
-	@echo "... shower2.i"
-	@echo "... shower2.s"
+	@echo "... avalanche2.o"
+	@echo "... avalanche2.i"
+	@echo "... avalanche2.s"
 .PHONY : help
 
 
