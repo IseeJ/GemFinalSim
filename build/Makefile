@@ -129,29 +129,29 @@ avalanche/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/avalanche.dir/build.make CMakeFiles/avalanche.dir/build
 .PHONY : avalanche/fast
 
-avalanche2.o: avalanche2.cc.o
-.PHONY : avalanche2.o
+avalanche22.o: avalanche22.cc.o
+.PHONY : avalanche22.o
 
 # target to build an object file
-avalanche2.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/avalanche.dir/build.make CMakeFiles/avalanche.dir/avalanche2.cc.o
-.PHONY : avalanche2.cc.o
+avalanche22.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/avalanche.dir/build.make CMakeFiles/avalanche.dir/avalanche22.cc.o
+.PHONY : avalanche22.cc.o
 
-avalanche2.i: avalanche2.cc.i
-.PHONY : avalanche2.i
+avalanche22.i: avalanche22.cc.i
+.PHONY : avalanche22.i
 
 # target to preprocess a source file
-avalanche2.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/avalanche.dir/build.make CMakeFiles/avalanche.dir/avalanche2.cc.i
-.PHONY : avalanche2.cc.i
+avalanche22.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/avalanche.dir/build.make CMakeFiles/avalanche.dir/avalanche22.cc.i
+.PHONY : avalanche22.cc.i
 
-avalanche2.s: avalanche2.cc.s
-.PHONY : avalanche2.s
+avalanche22.s: avalanche22.cc.s
+.PHONY : avalanche22.s
 
 # target to generate assembly for a file
-avalanche2.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/avalanche.dir/build.make CMakeFiles/avalanche.dir/avalanche2.cc.s
-.PHONY : avalanche2.cc.s
+avalanche22.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/avalanche.dir/build.make CMakeFiles/avalanche.dir/avalanche22.cc.s
+.PHONY : avalanche22.cc.s
 
 # Help Target
 help:
@@ -162,9 +162,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... avalanche"
-	@echo "... avalanche2.o"
-	@echo "... avalanche2.i"
-	@echo "... avalanche2.s"
+	@echo "... avalanche22.o"
+	@echo "... avalanche22.i"
+	@echo "... avalanche22.s"
 .PHONY : help
 
 

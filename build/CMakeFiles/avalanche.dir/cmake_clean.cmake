@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/avalanche.dir/avalanche2.cc.o"
-  "CMakeFiles/avalanche.dir/avalanche2.cc.o.d"
+  "CMakeFiles/avalanche.dir/avalanche22.cc.o"
+  "CMakeFiles/avalanche.dir/avalanche22.cc.o.d"
   "avalanche"
   "avalanche.pdb"
 )
